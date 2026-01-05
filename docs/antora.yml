@@ -1,0 +1,5 @@
+name: quarkus-redoc
+title: Redoc
+version: dev
+nav:
+  - modules/ROOT/nav.adoc
