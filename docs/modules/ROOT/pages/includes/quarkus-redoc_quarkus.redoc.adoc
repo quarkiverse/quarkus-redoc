@@ -1,0 +1,440 @@
+[.configuration-legend]
+icon:lock[title=Fixed at build time] Configuration property fixed at build time - All other configuration properties are overridable at runtime
+[.configuration-reference.searchable, cols="80,.^10,.^10"]
+|===
+
+h|[.header-title]##Configuration property##
+h|Type
+h|Default
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-path]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-path[`quarkus.redoc.path`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.path+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The path where Redoc UI is served (relative to non-application root path). The default is "redoc", which means Redoc will be available at /q/redoc.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_PATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_PATH+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++redoc+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-title]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-title[`quarkus.redoc.title`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.title+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The title displayed in the browser tab.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_TITLE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_TITLE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++API Documentation+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-always-include]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-always-include[`quarkus.redoc.always-include`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.always-include+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+If true, Redoc is included in production builds. By default, Redoc is only available in dev and test modes.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_ALWAYS_INCLUDE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_ALWAYS_INCLUDE+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-hide-download-buttons]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-hide-download-buttons[`quarkus.redoc.hide-download-buttons`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.hide-download-buttons+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Hides the 'Download' button for saving the API definition source file. This setting does not make the API definition private; it just hides the button.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_HIDE_DOWNLOAD_BUTTONS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_HIDE_DOWNLOAD_BUTTONS+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-hide-schema-titles]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-hide-schema-titles[`quarkus.redoc.hide-schema-titles`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.hide-schema-titles+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Hides the schema title next to the type.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_HIDE_SCHEMA_TITLES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_HIDE_SCHEMA_TITLES+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-json-samples-expand-level]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-json-samples-expand-level[`quarkus.redoc.json-samples-expand-level`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.json-samples-expand-level+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Sets the default expand level for JSON payload samples (response and request body). The default value is 2, and the maximum supported value is '{plus}Infinity'. It can also be configured as a string with the special value all that expands all levels.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_JSON_SAMPLES_EXPAND_LEVEL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_JSON_SAMPLES_EXPAND_LEVEL+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++2+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-max-displayed-enum-values]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-max-displayed-enum-values[`quarkus.redoc.max-displayed-enum-values`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.max-displayed-enum-values+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Displays only the specified number of enum values. The remaining values are hidden in an expandable area. By default 10 values are displayed which is ideal for usability.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_MAX_DISPLAYED_ENUM_VALUES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_MAX_DISPLAYED_ENUM_VALUES+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++10+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-layout]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-layout[`quarkus.redoc.layout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.layout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Controls how API documentation panels are displayed on the page.
+
+ - `three-panel` - Standard layout with sidebar on the left, main content in the center, and code samples on the right
+ - `stacked` - Alternative layout that integrates the right panel into the middle panel, creating a single-column view. Better for narrower viewports or sequential reading
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_LAYOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_LAYOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`three-panel`, `stacked`
+|`+++three-panel+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-only-required-in-samples]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-only-required-in-samples[`quarkus.redoc.only-required-in-samples`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.only-required-in-samples+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Shows only required fields in request samples. Use this option if you have a large number of optional fields that can make request samples difficult to read.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_ONLY_REQUIRED_IN_SAMPLES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_ONLY_REQUIRED_IN_SAMPLES+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-sort-required-props-first]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-sort-required-props-first[`quarkus.redoc.sort-required-props-first`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.sort-required-props-first+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Shows required properties in schemas first, ordered in the same order as in the required array.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_SORT_REQUIRED_PROPS_FIRST+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_SORT_REQUIRED_PROPS_FIRST+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-schemas-expansion-level]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-schemas-expansion-level[`quarkus.redoc.schemas-expansion-level`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.schemas-expansion-level+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Specifies whether to automatically expand schemas in Reference docs. Set it to all to expand all schemas regardless of their level, or set it to a number to expand schemas up to the specified level. For example, schemasExpansionLevel: 3 expands schemas up to three levels deep.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_SCHEMAS_EXPANSION_LEVEL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_SCHEMAS_EXPANSION_LEVEL+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++4+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-scroll-y-offset]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-scroll-y-offset[`quarkus.redoc.scroll-y-offset`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.scroll-y-offset+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Specifies a vertical scroll-offset in pixels. This setting is useful when there are fixed positioned elements at the top of the page, such as navbars, headers, etc.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_SCROLL_Y_OFFSET+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_SCROLL_Y_OFFSET+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-show-extensions]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-show-extensions[`quarkus.redoc.show-extensions`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.show-extensions+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Shows specification extensions ('x-' fields). Extensions used by Redoc are ignored.
+
+The value can be:
+
+ - `true` - show all specification extensions
+ - `false` - hide all specification extensions (default)
+ - a comma-separated list of extension names to display (e.g., `x-logo,x-code-samples`)
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_SHOW_EXTENSIONS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_SHOW_EXTENSIONS+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++false+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-sanitize]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-sanitize[`quarkus.redoc.sanitize`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.sanitize+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+If set to true, the spec is considered untrusted and all HTML/Markdown is sanitized.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_SANITIZE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_SANITIZE+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-download-urls-title]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-download-urls-title[`quarkus.redoc.download-urls.title`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.download-urls.title+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The title/label for this download option (e.g., "YAML", "JSON").
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_DOWNLOAD_URLS_TITLE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_DOWNLOAD_URLS_TITLE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-download-urls-url]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-download-urls-url[`quarkus.redoc.download-urls.url`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.download-urls.url+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The URL to download the API definition from.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_DOWNLOAD_URLS_URL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_DOWNLOAD_URLS_URL+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-schema-definitions-tag-name]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-schema-definitions-tag-name[`quarkus.redoc.schema-definitions-tag-name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.schema-definitions-tag-name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+If a value is set, all of the schemas are rendered with the designated tag name. The schemas then render and display in the sidebar navigation (with that associated tag name).
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_SCHEMA_DEFINITIONS_TAG_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_SCHEMA_DEFINITIONS_TAG_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++Schemas+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-generated-samples-max-depth]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-generated-samples-max-depth[`quarkus.redoc.generated-samples-max-depth`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.generated-samples-max-depth+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The generatedSamplesMaxDepth option controls how many schema levels automatically generated for payload samples. The default is 8 which works well for most APIs, but you can adjust it if necessary for your use case.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_GENERATED_SAMPLES_MAX_DEPTH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_GENERATED_SAMPLES_MAX_DEPTH+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++8+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-hide-properties-prefix]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-hide-properties-prefix[`quarkus.redoc.hide-properties-prefix`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.hide-properties-prefix+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+In complex data structures or object schemas where properties are nested within parent objects the hidePropertiesPrefix option enables the hiding of parent names for nested properties within the documentation.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_HIDE_PROPERTIES_PREFIX+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_HIDE_PROPERTIES_PREFIX+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a| [[quarkus-redoc_quarkus-redoc-enabled]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-enabled[`quarkus.redoc.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Whether Redoc is enabled at runtime. If false, the Redoc UI will return a 404 response.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++true+++`
+
+|===
+
