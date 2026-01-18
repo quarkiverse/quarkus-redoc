@@ -3,10 +3,7 @@ package io.quarkiverse.redoc.deployment;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
-import io.quarkiverse.redoc.deployment.config.DownloadUrlConfig;
 import io.quarkiverse.redoc.deployment.config.RedocConfig;
 import io.quarkiverse.redoc.runtime.RedocRecorder;
 import io.quarkus.deployment.annotations.BuildProducer;
@@ -18,13 +15,12 @@ import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import io.quarkus.smallrye.openapi.common.deployment.SmallRyeOpenApiConfig;
 import io.quarkus.vertx.http.deployment.NonApplicationRootPathBuildItem;
 import io.quarkus.vertx.http.deployment.RouteBuildItem;
-import io.vertx.core.json.JsonArray;
-import io.vertx.core.json.JsonObject;
 
 class RedocProcessor {
 
     private static final String FEATURE = "redoc";
     private static final String TEMPLATE_PATH = "templates/redoc.html";
+    private final RedocConfigSerializer configSerializer = new RedocConfigSerializer();
 
     @BuildStep
     FeatureBuildItem feature() {
@@ -62,69 +58,13 @@ class RedocProcessor {
 
     private String generateRedocHtml(RedocConfig config, String openApiUrl) {
         String template = loadTemplate();
-        String redocOptionsJson = serializeConfigToJson(config);
+        String redocOptionsJson = configSerializer.serialize(config);
 
         return template
                 .replace("{title}", escapeHtml(config.title()))
                 .replace("{specUrl}", escapeJs(openApiUrl))
                 .replace("{redocOptions}", redocOptionsJson)
                 .replace("{redocJsPath}", "https://cdn.redoc.ly/redoc/v3.0.0-rc.0/redoc.standalone.js");
-    }
-
-    private String serializeConfigToJson(RedocConfig config) {
-        JsonObject json = new JsonObject();
-
-        // Only serialize values that are explicitly set (Optionals present)
-        // This allows Redocly to use its own defaults when not configured
-        config.hideDownloadButtons().ifPresent(v -> json.put("hideDownloadButtons", v));
-        config.hideSchemaTitles().ifPresent(v -> json.put("hideSchemaTitles", v));
-        config.jsonSamplesExpandLevel().ifPresent(v -> json.put("jsonSamplesExpandLevel", parseIntOrString(v)));
-        config.maxDisplayedEnumValues().ifPresent(v -> json.put("maxDisplayedEnumValues", v));
-        config.layout().ifPresent(v -> json.put("layout", v.getValue()));
-        config.onlyRequiredInSamples().ifPresent(v -> json.put("onlyRequiredInSamples", v));
-        config.sortRequiredPropsFirst().ifPresent(v -> json.put("sortRequiredPropsFirst", v));
-        config.schemasExpansionLevel().ifPresent(v -> json.put("schemasExpansionLevel", parseIntOrString(v)));
-        config.scrollYOffset().ifPresent(v -> json.put("scrollYOffset", v));
-        config.showExtensions().ifPresent(v -> json.put("showExtensions", parseShowExtensions(v)));
-        config.sanitize().ifPresent(v -> json.put("sanitize", v));
-
-        if (!config.downloadUrls().isEmpty()) {
-            JsonObject downloadUrls = new JsonObject();
-            for (DownloadUrlConfig du : config.downloadUrls()) {
-                downloadUrls.put(du.title(), new JsonObject().put("url", du.url()));
-            }
-            json.put("downloadUrls", downloadUrls);
-        }
-
-        // schemaDefinitionsTagName has @WithDefault("Schemas"), only include if different
-        if (!"Schemas".equals(config.schemaDefinitionsTagName())) {
-            json.put("schemaDefinitionsTagName", config.schemaDefinitionsTagName());
-        }
-
-        config.generatedSamplesMaxDepth().ifPresent(v -> json.put("generatedSamplesMaxDepth", v));
-        config.hidePropertiesPrefix().ifPresent(v -> json.put("hidePropertiesPrefix", v));
-
-        return json.encode();
-    }
-
-    private Object parseIntOrString(String value) {
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
-            return value;
-        }
-    }
-
-    private Object parseShowExtensions(String value) {
-        if ("true".equalsIgnoreCase(value)) {
-            return true;
-        } else if ("false".equalsIgnoreCase(value)) {
-            return false;
-        } else {
-            return new JsonArray(Arrays.stream(value.split(","))
-                    .map(String::trim)
-                    .collect(Collectors.toList()));
-        }
     }
 
     private String loadTemplate() {
