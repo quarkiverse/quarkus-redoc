@@ -1,0 +1,16 @@
+{
+  "hideDownloadButtons": true,
+  "hideSchemaTitles": true,
+  "jsonSamplesExpandLevel": "all",
+  "maxDisplayedEnumValues": 20,
+  "layout": "stacked",
+  "onlyRequiredInSamples": true,
+  "sortRequiredPropsFirst": true,
+  "schemasExpansionLevel": "all",
+  "scrollYOffset": 100,
+  "showExtensions": true,
+  "sanitize": true,
+  "schemaDefinitionsTagName": "Models",
+  "generatedSamplesMaxDepth": 10,
+  "hidePropertiesPrefix": true
+}

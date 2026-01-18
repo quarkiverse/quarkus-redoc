@@ -1,0 +1,16 @@
+{
+  "hideDownloadButtons": false,
+  "hideSchemaTitles": false,
+  "jsonSamplesExpandLevel": 2,
+  "maxDisplayedEnumValues": 5,
+  "layout": "three-panel",
+  "onlyRequiredInSamples": false,
+  "sortRequiredPropsFirst": false,
+  "schemasExpansionLevel": 1,
+  "scrollYOffset": 0,
+  "showExtensions": false,
+  "sanitize": false,
+  "generatedSamplesMaxDepth": 4,
+  "hidePropertiesPrefix": false,
+  "schemaDefinitionsTagName": "Schemas"
+}

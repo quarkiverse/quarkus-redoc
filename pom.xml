@@ -31,6 +31,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.version>3.30.5</quarkus.version>
+        <json-unit.version>4.1.0</json-unit.version>
     </properties>
 
     <dependencyManagement>
@@ -41,6 +42,11 @@
                 <version>${quarkus.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.javacrumbs.json-unit</groupId>
+                <artifactId>json-unit-assertj</artifactId>
+                <version>${json-unit.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

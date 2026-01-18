@@ -13,6 +13,8 @@ import io.smallrye.config.WithDefault;
 @ConfigRoot(phase = ConfigPhase.BUILD_TIME)
 public interface RedocConfig {
 
+    String DEFAULT_SCHEMA_DEFINITIONS_TAG_NAME = "Schemas";
+
     /**
      * The path where Redoc UI is served (relative to non-application root path).
      * The default is "redoc", which means Redoc will be available at /q/redoc.
@@ -132,7 +134,7 @@ public interface RedocConfig {
      * If a value is set, all of the schemas are rendered with the designated tag name. The schemas then render and display in
      * the sidebar navigation (with that associated tag name).
      */
-    @WithDefault("Schemas")
+    @WithDefault(DEFAULT_SCHEMA_DEFINITIONS_TAG_NAME)
     String schemaDefinitionsTagName();
 
     /**
