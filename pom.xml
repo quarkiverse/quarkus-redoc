@@ -31,7 +31,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.version>3.30.5</quarkus.version>
-        <json-unit.version>4.1.0</json-unit.version>
+        <json-unit.version>5.1.0</json-unit.version>
     </properties>
 
     <dependencyManagement>
