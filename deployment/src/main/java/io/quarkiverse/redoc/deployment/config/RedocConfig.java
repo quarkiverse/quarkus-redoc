@@ -128,6 +128,7 @@ public interface RedocConfig {
     /**
      * Custom download URLs for the API definition.
      */
+    @ConfigDocDefault("Defaults to showing download links for yaml and json")
     List<DownloadUrlConfig> downloadUrls();
 
     /**

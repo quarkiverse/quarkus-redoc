@@ -1,0 +1,7 @@
+{
+  "downloadUrls": [
+    {"title": "JSON", "url": "/q/openapi.json"},
+    {"title": "YAML", "url": "/q/openapi.yaml"}
+  ],
+  "schemaDefinitionsTagName": "Schemas"
+}

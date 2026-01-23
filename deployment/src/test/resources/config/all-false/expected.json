@@ -10,6 +10,10 @@
   "scrollYOffset": 0,
   "showExtensions": false,
   "sanitize": false,
+  "downloadUrls": [
+    {"title": "JSON", "url": "/q/openapi.json"},
+    {"title": "YAML", "url": "/q/openapi.yaml"}
+  ],
   "generatedSamplesMaxDepth": 4,
   "hidePropertiesPrefix": false,
   "schemaDefinitionsTagName": "Schemas"
