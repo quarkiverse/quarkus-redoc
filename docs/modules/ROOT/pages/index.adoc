@@ -2,16 +2,34 @@
 
 include::./includes/attributes.adoc[]
 
-This extension provides https://redocly.com/redoc/[Redoc] API documentation for your Quarkus application. Redoc generates beautiful, interactive API documentation from your OpenAPI specification.
+This extension provides https://redocly.com/redoc/[Redoc] API documentation for your Quarkus application. Redoc is an open source tool for generating documentation from OpenAPI (formerly Swagger) definitions.
 
-This extension uses **Redoc 3.0** and supports all Redoc Community Edition (CE) configuration options including full theme customization.
+This extension uses **Redoc 3.0** and supports all Redoc Community Edition (CE) configuration options.
 
 == Features
 
-* Automatic integration with SmallRye OpenAPI
-* Full theme customization (colors, typography, sidebar, right panel)
-* Support for all Redoc CE configuration options
-* Available in dev/test mode by default, with option to include in production
+**Specify Download URLs**
+By default, this extension configures Redoc CE to show download URLs for the OpenAPI document in both JSON and YAML format.
+
+You can disable them completely using the following configuration.
+
+[source,properties]
+----
+quarkus.redoc.hide-download-buttons=true
+----
+
+You can also override the default provided download URLs with your own. For example, if your API is about users, you could change the URLs as follows.
+
+[source,properties]
+----
+quarkus.redoc.download-urls[0].title=User API JSON
+quarkus.redoc.download-urls[0].url=/q/openapi.json
+quarkus.redoc.download-urls[1].title=User API YAML
+quarkus.redoc.download-urls[1].url=/q/openapi.yaml
+----
+
+You can provide as many download URLs as you want.
+See also how to configure indexed properties in the Quarkus documentation: https://quarkus.io/guides/config-reference#indexed-properties
 
 == Installation
 
@@ -31,71 +49,6 @@ For instance, with Maven, add the following dependency to your POM file:
 == Usage
 
 Once installed, Redoc will be available at `/q/redoc` in dev and test modes. Simply navigate to that URL to view your API documentation.
-
-=== Basic Configuration
-
-[source,properties]
-----
-# Customize the path (default: redoc)
-quarkus.redoc.path=api-docs
-
-# Customize the page title
-quarkus.redoc.title=My API Documentation
-
-# Include Redoc in production builds
-quarkus.redoc.always-include=true
-----
-
-=== Theme Customization
-
-You can fully customize the Redoc theme using the `quarkus.redoc.theme.*` properties:
-
-[source,properties]
-----
-# Primary color for links and accents
-quarkus.redoc.theme.colors.primary.main=#0090cc
-
-# Typography
-quarkus.redoc.theme.typography.font-size=14px
-quarkus.redoc.theme.typography.font-family=Roboto, sans-serif
-quarkus.redoc.theme.typography.headings.font-weight=bold
-
-# Sidebar styling
-quarkus.redoc.theme.sidebar.background-color=#fafafa
-quarkus.redoc.theme.sidebar.text-color=#333333
-
-# Right panel (code samples) styling
-quarkus.redoc.theme.right-panel.background-color=#263238
-quarkus.redoc.theme.right-panel.text-color=#ffffff
-----
-
-=== Functional Options
-
-Configure Redoc behavior with these options:
-
-[source,properties]
-----
-# Disable search
-quarkus.redoc.disable-search=true
-
-# Hide download buttons
-quarkus.redoc.hide-download-buttons=true
-
-# Layout mode: three-panel (default) or stacked
-quarkus.redoc.layout=stacked
-
-# Expand JSON samples to a specific level (default: 2)
-quarkus.redoc.json-samples-expand-level=3
-
-# Show only required fields in samples
-quarkus.redoc.only-required-in-samples=true
-
-# Sort required properties first in schemas
-quarkus.redoc.sort-required-props-first=true
-
-# Show specification extensions (x-* fields)
-quarkus.redoc.show-extensions=true
-----
 
 [[extension-configuration-reference]]
 == Extension Configuration Reference

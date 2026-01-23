@@ -10,6 +10,10 @@
   "scrollYOffset": 100,
   "showExtensions": true,
   "sanitize": true,
+  "downloadUrls": [
+    {"title": "JSON", "url": "/q/openapi.json"},
+    {"title": "YAML", "url": "/q/openapi.yaml"}
+  ],
   "schemaDefinitionsTagName": "Models",
   "generatedSamplesMaxDepth": 10,
   "hidePropertiesPrefix": true
