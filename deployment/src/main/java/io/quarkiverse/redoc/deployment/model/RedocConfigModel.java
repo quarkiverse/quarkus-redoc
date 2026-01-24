@@ -1,13 +1,14 @@
 package io.quarkiverse.redoc.deployment.model;
 
 import java.util.List;
+import java.util.Set;
 
 import io.quarkiverse.redoc.deployment.config.Layout;
 
 /**
  * DTO representing the resolved Redoc configuration with defaults applied.
  */
-public record RedocConfigDto(
+public record RedocConfigModel(
         String path,
         String title,
         boolean alwaysInclude,
@@ -22,8 +23,11 @@ public record RedocConfigDto(
         Integer scrollYOffset,
         String showExtensions,
         Boolean sanitize,
-        List<DownloadUrlDto> downloadUrls,
+        List<DownloadUrlModel> downloadUrlModels,
         String schemaDefinitionsTagName,
         Integer generatedSamplesMaxDepth,
-        Boolean hidePropertiesPrefix) {
+        Boolean hidePropertiesPrefix,
+        Set<String> ignoreNamedSchemas,
+        Boolean hideLoading,
+        Boolean hideSidebar) {
 }

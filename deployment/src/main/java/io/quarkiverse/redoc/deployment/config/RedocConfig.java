@@ -2,6 +2,7 @@ package io.quarkiverse.redoc.deployment.config;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import io.quarkus.runtime.annotations.ConfigDocDefault;
 import io.quarkus.runtime.annotations.ConfigPhase;
@@ -151,4 +152,22 @@ public interface RedocConfig {
      */
     @ConfigDocDefault("false")
     Optional<Boolean> hidePropertiesPrefix();
+
+    /**
+     * A list of schema names to ignore. Matching schemas are excluded from the documentation. Multiple schema names can be
+     * specified.
+     */
+    Optional<Set<String>> ignoreNamedSchemas();
+
+    /**
+     * Hides the loading animation.
+     */
+    @ConfigDocDefault("false")
+    Optional<Boolean> hideLoading();
+
+    /**
+     * Hides the sidebar navigation menu.
+     */
+    @ConfigDocDefault("false")
+    Optional<Boolean> hideSidebar();
 }
