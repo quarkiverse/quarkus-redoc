@@ -3,11 +3,12 @@ package io.quarkiverse.redoc.deployment;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 
 import io.quarkiverse.redoc.deployment.config.RedocConfig;
-import io.quarkiverse.redoc.deployment.model.DownloadUrlDto;
-import io.quarkiverse.redoc.deployment.model.RedocConfigDto;
+import io.quarkiverse.redoc.deployment.model.DownloadUrlModel;
+import io.quarkiverse.redoc.deployment.model.RedocConfigModel;
 import io.quarkiverse.redoc.runtime.RedocRecorder;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
@@ -38,18 +39,18 @@ class RedocProcessor {
 
         String openApiBasePath = nonApplicationRootPath.resolvePath(openApiConfig.path());
 
-        List<DownloadUrlDto> downloadUrls;
+        List<DownloadUrlModel> downloadUrls;
         if (config.downloadUrls().isEmpty()) {
             downloadUrls = List.of(
-                    new DownloadUrlDto("JSON", openApiBasePath + ".json"),
-                    new DownloadUrlDto("YAML", openApiBasePath + ".yaml"));
+                    new DownloadUrlModel("JSON", openApiBasePath + ".json"),
+                    new DownloadUrlModel("YAML", openApiBasePath + ".yaml"));
         } else {
             downloadUrls = config.downloadUrls().stream()
-                    .map(du -> new DownloadUrlDto(du.title(), du.url()))
+                    .map(du -> new DownloadUrlModel(du.title(), du.url()))
                     .toList();
         }
 
-        return new RedocConfigBuildItem(new RedocConfigDto(
+        return new RedocConfigBuildItem(new RedocConfigModel(
                 config.path(),
                 config.title(),
                 config.alwaysInclude(),
@@ -67,7 +68,10 @@ class RedocProcessor {
                 downloadUrls,
                 config.schemaDefinitionsTagName(),
                 config.generatedSamplesMaxDepth().orElse(null),
-                config.hidePropertiesPrefix().orElse(null)));
+                config.hidePropertiesPrefix().orElse(null),
+                config.ignoreNamedSchemas().orElse(Collections.emptySet()),
+                config.hideLoading().orElse(null),
+                config.hideSidebar().orElse(null)));
     }
 
     @BuildStep
@@ -80,7 +84,7 @@ class RedocProcessor {
             RedocRecorder recorder,
             BuildProducer<RouteBuildItem> routeProducer) {
 
-        RedocConfigDto config = configBuildItem.getConfig();
+        RedocConfigModel config = configBuildItem.getConfig();
 
         if (!shouldInclude(launchMode, config)) {
             return;
@@ -97,11 +101,11 @@ class RedocProcessor {
                         .build());
     }
 
-    private boolean shouldInclude(LaunchModeBuildItem launchMode, RedocConfigDto config) {
+    private boolean shouldInclude(LaunchModeBuildItem launchMode, RedocConfigModel config) {
         return launchMode.getLaunchMode().isDevOrTest() || config.alwaysInclude();
     }
 
-    private String generateRedocHtml(RedocConfigDto config, String openApiUrl) {
+    private String generateRedocHtml(RedocConfigModel config, String openApiUrl) {
         String template = loadTemplate();
         String redocOptionsJson = configSerializer.serialize(config);
 

@@ -16,5 +16,7 @@
   ],
   "generatedSamplesMaxDepth": 4,
   "hidePropertiesPrefix": false,
-  "schemaDefinitionsTagName": "Schemas"
+  "schemaDefinitionsTagName": "Schemas",
+  "hideLoading": false,
+  "hideSidebar": false
 }

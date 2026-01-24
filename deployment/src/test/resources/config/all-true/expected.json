@@ -16,5 +16,8 @@
   ],
   "schemaDefinitionsTagName": "Models",
   "generatedSamplesMaxDepth": 10,
-  "hidePropertiesPrefix": true
+  "hidePropertiesPrefix": true,
+  "ignoreNamedSchemas": ["InternalSchema", "DeprecatedModel"],
+  "hideLoading": true,
+  "hideSidebar": true
 }

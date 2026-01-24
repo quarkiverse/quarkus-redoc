@@ -415,6 +415,69 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-ignore-named-schemas]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-ignore-named-schemas[`quarkus.redoc.ignore-named-schemas`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.ignore-named-schemas+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+A list of schema names to ignore. Matching schemas are excluded from the documentation. Multiple schema names can be specified.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_IGNORE_NAMED_SCHEMAS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_IGNORE_NAMED_SCHEMAS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-hide-loading]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-hide-loading[`quarkus.redoc.hide-loading`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.hide-loading+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Hides the loading animation.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_HIDE_LOADING+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_HIDE_LOADING+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-hide-sidebar]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-hide-sidebar[`quarkus.redoc.hide-sidebar`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.hide-sidebar+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Hides the sidebar navigation menu.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_HIDE_SIDEBAR+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_HIDE_SIDEBAR+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
 a| [[quarkus-redoc_quarkus-redoc-enabled]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-enabled[`quarkus.redoc.enabled`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.redoc.enabled+++[]
