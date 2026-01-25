@@ -24,6 +24,18 @@ public interface RedocConfig {
     String path();
 
     /**
+     * The base path of Redocly, combined with any other preceding path. Redocly performs URL manipulation when navigating to
+     * OpenAPI tags using the sidebar.
+     * <p/>
+     * Useful if this Quarkus application is served behind a reverse proxy which performs URL rewriting.
+     * <p/>
+     * E.g. If the reverse proxy rewrites / to /my-application, and the path config property is `redoc`, then this
+     * routing-base-path property should be set to `/my-application/q/redoc`.
+     */
+    @ConfigDocDefault("Defaults to the resolved path (e.g., /q/redoc)")
+    Optional<String> routingBasePath();
+
+    /**
      * The title displayed in the browser tab.
      */
     @WithDefault("API Documentation")

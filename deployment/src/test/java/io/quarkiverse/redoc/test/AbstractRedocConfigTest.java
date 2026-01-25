@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 public abstract class AbstractRedocConfigTest {
 
     private static final Pattern REDOC_OPTIONS_PATTERN = Pattern.compile(
-            "init\\('[^']*',\\s*(\\{.*?})\\s*,\\s*document\\.getElementById",
+            "const redocOptions = (\\{.*?});",
             Pattern.DOTALL);
 
     protected abstract String getConfigPath();

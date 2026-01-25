@@ -1,4 +1,5 @@
 {
+  "routingBasePath": "/q/redoc",
   "hideDownloadButtons": false,
   "hideSchemaTitles": false,
   "jsonSamplesExpandLevel": 2,
