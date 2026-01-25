@@ -1,10 +1,10 @@
 name: Redoc
-description: OpenAPI/Swagger-generated API Reference Documentation
+description: OpenAPI/Swagger-generated API Reference Documentation using Redoc CE
 
 metadata:
   keywords:
     - redoc
-  #guide: https://docs.quarkiverse.io/redoc/dev/ # To create and publish this guide, see https://github.com/quarkiverse/quarkiverse/wiki#documenting-your-extension
+  guide: https://docs.quarkiverse.io/redoc/dev/
   icon-url: https://avatars.githubusercontent.com/u/32099856?s=48&v=4
   categories:
     - "redoc"
