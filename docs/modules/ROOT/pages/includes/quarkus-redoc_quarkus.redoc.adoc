@@ -28,6 +28,31 @@ endif::add-copy-button-to-env-var[]
 |string
 |`+++redoc+++`
 
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-routing-base-path]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-routing-base-path[`quarkus.redoc.routing-base-path`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.routing-base-path+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The base path of Redocly, combined with any other preceding path. Redocly performs URL manipulation when navigating to OpenAPI tags using the sidebar.
+
+Useful if this Quarkus application is served behind a reverse proxy which performs URL rewriting.
+
+E.g. If the reverse proxy rewrites / to /my-application, and the path config property is `redoc`, then this routing-base-path property should be set to `/my-application/q/redoc`.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_ROUTING_BASE_PATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_ROUTING_BASE_PATH+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++Defaults to the resolved path (e.g., /q/redoc)+++`
+
 a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-title]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-title[`quarkus.redoc.title`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.redoc.title+++[]

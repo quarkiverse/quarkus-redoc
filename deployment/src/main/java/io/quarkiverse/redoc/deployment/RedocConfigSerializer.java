@@ -17,6 +17,9 @@ public class RedocConfigSerializer {
     public String serialize(RedocConfigModel config) {
         JsonObject json = new JsonObject();
 
+        if (config.routingBasePath() != null) {
+            json.put("routingBasePath", config.routingBasePath());
+        }
         if (config.hideDownloadButtons() != null) {
             json.put("hideDownloadButtons", config.hideDownloadButtons());
         }

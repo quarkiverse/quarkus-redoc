@@ -14,9 +14,36 @@
 <body>
     <div id="redoc-container"></div>
 
+    <script>
+        const specUrl = '{specUrl}';
+        const redocOptions = {redocOptions};
+    </script>
+    <script>
+        // Workaround: Override History API to keep base path at the configured routingBasePath
+        // routingBasePath causes redocly not to load anymore in 3.0.0.rc0
+        const routingBasePath = redocOptions.routingBasePath;
+        redocOptions.routingBasePath = null;
+
+        const originalPushState = history.pushState.bind(history);
+        const originalReplaceState = history.replaceState.bind(history);
+
+        history.pushState = function(state, title, url) {
+            if (url && !url.startsWith(routingBasePath)) {
+                url = routingBasePath + (url.startsWith('/') ? '' : '/') + url;
+            }
+            return originalPushState(state, title, url);
+        };
+
+        history.replaceState = function(state, title, url) {
+            if (url && !url.startsWith(routingBasePath)) {
+                url = routingBasePath + (url.startsWith('/') ? '' : '/') + url;
+            }
+            return originalReplaceState(state, title, url);
+        };
+    </script>
     <script type="module">
         import { init } from '{redocJsPath}';
-        init('{specUrl}', {redocOptions}, document.getElementById('redoc-container'))
+        init(specUrl, redocOptions, document.getElementById('redoc-container'))
     </script>
 </body>
 </html>

@@ -50,8 +50,13 @@ class RedocProcessor {
                     .toList();
         }
 
+        String routingBasePath = config.routingBasePath()
+                .filter(s -> !s.isEmpty())
+                .orElseGet(() -> nonApplicationRootPath.resolvePath(config.path()));
+
         return new RedocConfigBuildItem(new RedocConfigModel(
                 config.path(),
+                routingBasePath,
                 config.title(),
                 config.alwaysInclude(),
                 config.hideDownloadButtons().orElse(null),

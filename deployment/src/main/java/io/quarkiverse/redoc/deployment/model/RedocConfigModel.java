@@ -10,6 +10,7 @@ import io.quarkiverse.redoc.deployment.config.Layout;
  */
 public record RedocConfigModel(
         String path,
+        String routingBasePath,
         String title,
         boolean alwaysInclude,
         Boolean hideDownloadButtons,
