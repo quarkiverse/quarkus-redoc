@@ -3,6 +3,7 @@ package io.quarkiverse.redoc.deployment;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.microprofile.openapi.OASFactory;
 import org.eclipse.microprofile.openapi.OASFilter;
 import org.eclipse.microprofile.openapi.models.OpenAPI;
 import org.eclipse.microprofile.openapi.models.info.Info;
@@ -33,7 +34,7 @@ public class XLogoOASFilter implements OASFilter {
         // If Info doesn't exist, create it
         Info info = openAPI.getInfo();
         if (info == null) {
-            info = org.eclipse.microprofile.openapi.OASFactory.createInfo();
+            info = OASFactory.createInfo();
             openAPI.setInfo(info);
         }
 

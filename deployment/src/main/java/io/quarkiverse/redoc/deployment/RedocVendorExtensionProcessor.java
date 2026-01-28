@@ -3,11 +3,13 @@ package io.quarkiverse.redoc.deployment;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import io.quarkiverse.redoc.deployment.config.RedocConfig;
 import io.quarkiverse.redoc.deployment.config.XLogoConfig;
 import io.quarkiverse.redoc.runtime.RedocRecorder;
+import io.quarkus.builder.item.SimpleBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
@@ -23,17 +25,18 @@ import io.quarkus.vertx.http.deployment.RouteBuildItem;
  */
 class RedocVendorExtensionProcessor {
 
+    private static final String REDOC_LOGO_FILE_PREFIX = "redoc-logo.";
+
     @BuildStep
     void addXLogoToOpenAPI(
             RedocConfig config,
             NonApplicationRootPathBuildItem nonApplicationRootPath,
-            CurateOutcomeBuildItem curateOutcome,
-            BuildProducer<AddToOpenAPIDefinitionBuildItem> openApiProducer) {
+            BuildProducer<AddToOpenAPIDefinitionBuildItem> openApiProducer, Optional<RedocLogoBuildItem> redocLogoBuildItem) {
 
         XLogoConfig xLogoConfig = config.extensions().xLogo();
 
         // Determine the logo URL
-        String logoUrl = determineLogoUrl(xLogoConfig, config.path(), nonApplicationRootPath, curateOutcome);
+        String logoUrl = determineLogoUrl(xLogoConfig, config.path(), nonApplicationRootPath, redocLogoBuildItem);
 
         // If no logo URL is determined, skip adding the extension
         if (logoUrl == null || logoUrl.isEmpty()) {
@@ -55,9 +58,8 @@ class RedocVendorExtensionProcessor {
     void registerLogoRoute(
             RedocConfig config,
             NonApplicationRootPathBuildItem nonApplicationRootPath,
-            CurateOutcomeBuildItem curateOutcome,
             RedocRecorder recorder,
-            BuildProducer<RouteBuildItem> routeProducer) {
+            BuildProducer<RouteBuildItem> routeProducer, Optional<RedocLogoBuildItem> redocLogoBuildItem) {
 
         // Only register the route if we're serving a logo from the classpath
         XLogoConfig xLogoConfig = config.extensions().xLogo();
@@ -65,70 +67,58 @@ class RedocVendorExtensionProcessor {
             // User configured an external URL, no need to serve the logo
             return;
         }
-
         // Check if logo file exists in classpath
-        LogoInfo logoInfo = findLogoInClasspath(curateOutcome);
-        if (logoInfo == null) {
+        if (!redocLogoBuildItem.isPresent()) {
             return;
         }
 
         // Register a route to serve the logo
-        String logoPath = config.path() + "/redoc-logo" + logoInfo.extension();
+        String logoPath = config.path() + "/" + REDOC_LOGO_FILE_PREFIX + redocLogoBuildItem.get().extension;
         routeProducer.produce(
                 nonApplicationRootPath.routeBuilder()
                         .route(logoPath)
-                        .handler(recorder.createLogoHandler(logoInfo.resourcePath()))
+                        .handler(recorder.createLogoHandler(redocLogoBuildItem.get().fileName))
                         .build());
     }
 
     private String determineLogoUrl(XLogoConfig xLogoConfig, String configPath,
             NonApplicationRootPathBuildItem nonApplicationRootPath,
-            CurateOutcomeBuildItem curateOutcome) {
-        // If a URL is explicitly configured, use it
+            Optional<RedocLogoBuildItem> redocLogoBuildItem) {
+
+        // configured logo takes precedence over file
+
         if (xLogoConfig.url().isPresent()) {
             return xLogoConfig.url().get();
         }
 
-        // Check if redoc-logo file exists in the classpath
-        LogoInfo logoInfo = findLogoInClasspath(curateOutcome);
-        if (logoInfo != null) {
-            // Return the path where we'll serve the logo
-            return nonApplicationRootPath.resolvePath(configPath + "/redoc-logo" + logoInfo.extension());
-        }
+        return redocLogoBuildItem.map(logoBuildItem -> nonApplicationRootPath
+                .resolvePath(configPath + "/" + REDOC_LOGO_FILE_PREFIX + logoBuildItem.extension)).orElse(null);
 
-        return null;
     }
 
-    private LogoInfo findLogoInClasspath(CurateOutcomeBuildItem curateOutcome) {
+    @BuildStep
+    RedocLogoBuildItem detectCustomRedocLogo(CurateOutcomeBuildItem curateOutcome) {
         ResolvedDependency appArtifact = curateOutcome.getApplicationModel().getAppArtifact();
         if (appArtifact != null && appArtifact.getResolvedPaths() != null) {
             for (var basePath : appArtifact.getResolvedPaths()) {
-                // Look directly in the resources directory, not META-INF/resources
-                // since we're serving the logo ourselves with a custom route
-                Path resourcesPath = basePath;
-
-                // Check if this is a directory (during development/testing)
-                if (Files.exists(resourcesPath) && Files.isDirectory(resourcesPath)) {
-                    try (Stream<Path> files = Files.list(resourcesPath)) {
+                if (Files.exists(basePath) && Files.isDirectory(basePath)) {
+                    try (Stream<Path> files = Files.list(basePath)) {
                         var logoFile = files
                                 .filter(Files::isRegularFile)
                                 .filter(p -> {
                                     String name = p.getFileName().toString();
-                                    // Check that it starts with "redoc-logo." and has a valid extension
-                                    if (!name.startsWith("redoc-logo.")) {
+                                    if (!name.startsWith(REDOC_LOGO_FILE_PREFIX)) {
                                         return false;
                                     }
                                     int dotIndex = name.lastIndexOf('.');
                                     // Ensure there's at least one character after the dot (the extension)
-                                    return dotIndex >= "redoc-logo.".length() - 1 && dotIndex < name.length() - 1;
+                                    return dotIndex >= REDOC_LOGO_FILE_PREFIX.length() - 1 && dotIndex < name.length() - 1;
                                 })
                                 .findFirst();
 
                         if (logoFile.isPresent()) {
                             String fileName = logoFile.get().getFileName().toString();
-                            String extension = fileName.substring(fileName.lastIndexOf('.'));
-                            String resourcePath = fileName;
-                            return new LogoInfo(resourcePath, extension);
+                            return new RedocLogoBuildItem(fileName, fileName.substring(REDOC_LOGO_FILE_PREFIX.length()));
                         }
                     } catch (IOException e) {
                         // Continue if directory listing fails
@@ -139,6 +129,13 @@ class RedocVendorExtensionProcessor {
         return null;
     }
 
-    private record LogoInfo(String resourcePath, String extension) {
+    private final class RedocLogoBuildItem extends SimpleBuildItem {
+        String fileName;
+        String extension;
+
+        public RedocLogoBuildItem(String fileName, String extension) {
+            this.fileName = fileName;
+            this.extension = extension;
+        }
     }
 }
