@@ -46,29 +46,29 @@ public class RedocRecorder {
             return _404handler();
         }
 
-        // Cache the file contents at build time
-        final byte[] cachedBytes;
-        final String contentType;
-
-        try (InputStream is = Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream(resourcePath)) {
-            if (is == null) {
-                return _404handler();
-            }
-
-            cachedBytes = is.readAllBytes();
-            contentType = determineContentType(resourcePath);
-        } catch (Exception e) {
-            return _404handler();
-        }
-
         return new Handler<RoutingContext>() {
             @Override
             public void handle(RoutingContext event) {
-                event.response()
-                        .putHeader("Content-Type", contentType)
-                        .putHeader("Content-Length", String.valueOf(cachedBytes.length))
-                        .end(Buffer.buffer(cachedBytes));
+                try (InputStream is = Thread.currentThread().getContextClassLoader()
+                        .getResourceAsStream(resourcePath)) {
+                    if (is == null) {
+                        event.response().setStatusCode(404);
+                        event.response().end();
+                        return;
+                    }
+
+                    byte[] bytes = is.readAllBytes();
+                    String contentType = determineContentType(resourcePath);
+
+                    event.response()
+                            .putHeader("Content-Type", contentType)
+                            .putHeader("Content-Length", String.valueOf(bytes.length))
+                            .putHeader("Cache-Control", "public, max-age=86400") // Cache for 1 day
+                            .end(Buffer.buffer(bytes));
+                } catch (Exception e) {
+                    event.response().setStatusCode(500);
+                    event.response().end();
+                }
             }
         };
     }
