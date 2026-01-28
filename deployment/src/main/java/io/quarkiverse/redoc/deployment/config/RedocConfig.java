@@ -182,4 +182,9 @@ public interface RedocConfig {
      */
     @ConfigDocDefault("false")
     Optional<Boolean> hideSidebar();
+
+    /**
+     * Configuration for Redocly vendor extensions.
+     */
+    RedocExtensionsConfig extensions();
 }

@@ -503,6 +503,94 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-extensions-x-logo-url]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-extensions-x-logo-url[`quarkus.redoc.extensions.x-logo.url`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.extensions.x-logo.url+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The URL to the logo image. This can be:
+
+ - An absolute URL (e.g., https://example.com/logo.png)
+ - A relative path that will be served by the application
+ - If not set, the extension will look for a file starting with 'redoc-logo.' in the classpath under META-INF/resources/
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_EXTENSIONS_X_LOGO_URL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_EXTENSIONS_X_LOGO_URL+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-extensions-x-logo-background-color]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-extensions-x-logo-background-color[`quarkus.redoc.extensions.x-logo.background-color`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.extensions.x-logo.background-color+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The background color for the logo area (in hexadecimal format, e.g., ++#++FFFFFF).
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_EXTENSIONS_X_LOGO_BACKGROUND_COLOR+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_EXTENSIONS_X_LOGO_BACKGROUND_COLOR+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-extensions-x-logo-alt-text]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-extensions-x-logo-alt-text[`quarkus.redoc.extensions.x-logo.alt-text`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.extensions.x-logo.alt-text+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Alternate text for the logo image, shown if the image cannot be loaded.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_EXTENSIONS_X_LOGO_ALT_TEXT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_EXTENSIONS_X_LOGO_ALT_TEXT+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-extensions-x-logo-href]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-extensions-x-logo-href[`quarkus.redoc.extensions.x-logo.href`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.extensions.x-logo.href+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The URL the logo links to when clicked.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_EXTENSIONS_X_LOGO_HREF+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_EXTENSIONS_X_LOGO_HREF+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
 a| [[quarkus-redoc_quarkus-redoc-enabled]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-enabled[`quarkus.redoc.enabled`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.redoc.enabled+++[]
