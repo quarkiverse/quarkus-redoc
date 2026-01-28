@@ -15,15 +15,19 @@ public class RedocRecorder {
     }
 
     public Handler<RoutingContext> createHandler(String htmlContent) {
-        if (config.getValue().enabled()) {
-            return new Handler<RoutingContext>() {
-                @Override
-                public void handle(RoutingContext event) {
-                    event.response().end(htmlContent);
-                }
-            };
+        if (!config.getValue().enabled()) {
+            return _404handler();
         }
 
+        return new Handler<RoutingContext>() {
+            @Override
+            public void handle(RoutingContext event) {
+                event.response().end(htmlContent);
+            }
+        };
+    }
+
+    private Handler<RoutingContext> _404handler() {
         return new Handler<RoutingContext>() {
             @Override
             public void handle(RoutingContext event) {

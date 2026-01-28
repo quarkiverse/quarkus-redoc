@@ -30,5 +30,6 @@ public record RedocConfigModel(
         Boolean hidePropertiesPrefix,
         Set<String> ignoreNamedSchemas,
         Boolean hideLoading,
-        Boolean hideSidebar) {
+        Boolean hideSidebar,
+        ExtensionsModel extensionsModel) {
 }
