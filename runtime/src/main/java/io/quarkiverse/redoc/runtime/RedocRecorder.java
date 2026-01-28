@@ -46,36 +46,29 @@ public class RedocRecorder {
             return _404handler();
         }
 
+        // Cache the file contents at build time
+        final byte[] cachedBytes;
+        final String contentType;
+
+        try (InputStream is = Thread.currentThread().getContextClassLoader()
+                .getResourceAsStream(resourcePath)) {
+            if (is == null) {
+                return _404handler();
+            }
+
+            cachedBytes = is.readAllBytes();
+            contentType = determineContentType(resourcePath);
+        } catch (Exception e) {
+            return _404handler();
+        }
+
         return new Handler<RoutingContext>() {
             @Override
             public void handle(RoutingContext event) {
-                try (InputStream is = Thread.currentThread().getContextClassLoader()
-                        .getResourceAsStream(resourcePath)) {
-                    if (is == null) {
-                        event.response().setStatusCode(404);
-                        event.response().end();
-                        return;
-                    }
-
-                    // Check file size to prevent memory issues
-                    byte[] bytes = is.readNBytes(5 * 1024 * 1024); // Limit to 5MB
-                    if (is.read() != -1) {
-                        // File is larger than 5MB
-                        event.response().setStatusCode(413); // Payload Too Large
-                        event.response().end();
-                        return;
-                    }
-
-                    String contentType = determineContentType(resourcePath);
-
-                    event.response()
-                            .putHeader("Content-Type", contentType)
-                            .putHeader("Content-Length", String.valueOf(bytes.length))
-                            .end(Buffer.buffer(bytes));
-                } catch (Exception e) {
-                    event.response().setStatusCode(500);
-                    event.response().end();
-                }
+                event.response()
+                        .putHeader("Content-Type", contentType)
+                        .putHeader("Content-Length", String.valueOf(cachedBytes.length))
+                        .end(Buffer.buffer(cachedBytes));
             }
         };
     }
