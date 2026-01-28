@@ -86,14 +86,13 @@ class RedocProcessor {
     @BuildStep
     void addXLogoToOpenAPI(
             RedocConfig config,
-            NonApplicationRootPathBuildItem nonApplicationRootPath,
             CurateOutcomeBuildItem curateOutcome,
             BuildProducer<AddToOpenAPIDefinitionBuildItem> openApiProducer) {
 
         XLogoConfig xLogoConfig = config.xLogo();
 
         // Determine the logo URL
-        String logoUrl = determineLogoUrl(xLogoConfig, nonApplicationRootPath, curateOutcome);
+        String logoUrl = determineLogoUrl(xLogoConfig, curateOutcome);
 
         // If no logo URL is determined, skip adding the extension
         if (logoUrl == null || logoUrl.isEmpty()) {
@@ -110,8 +109,7 @@ class RedocProcessor {
         openApiProducer.produce(new AddToOpenAPIDefinitionBuildItem(filter));
     }
 
-    private String determineLogoUrl(XLogoConfig xLogoConfig, NonApplicationRootPathBuildItem nonApplicationRootPath,
-            CurateOutcomeBuildItem curateOutcome) {
+    private String determineLogoUrl(XLogoConfig xLogoConfig, CurateOutcomeBuildItem curateOutcome) {
         // If a URL is explicitly configured, use it
         if (xLogoConfig.url().isPresent()) {
             return xLogoConfig.url().get();
@@ -119,8 +117,8 @@ class RedocProcessor {
 
         // Check if logo.png exists in the classpath under META-INF/resources/
         if (logoExistsInClasspath(curateOutcome)) {
-            // Return the path relative to the non-application root
-            return nonApplicationRootPath.resolvePath("logo.png");
+            // Resources in META-INF/resources/ are served from the application root
+            return "/logo.png";
         }
 
         return null;

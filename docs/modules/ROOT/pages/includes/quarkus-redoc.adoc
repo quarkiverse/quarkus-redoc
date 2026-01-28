@@ -557,7 +557,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Alternate text for the logo image, shown if the image cannot be loaded. Defaults to "logo" if not provided.
+Alternate text for the logo image, shown if the image cannot be loaded.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -578,7 +578,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The URL the logo links to when clicked. If not provided, it defaults to the info.contact.url from the OpenAPI spec.
+The URL the logo links to when clicked.
 
 
 ifdef::add-copy-button-to-env-var[]

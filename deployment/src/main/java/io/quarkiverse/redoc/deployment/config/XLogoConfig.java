@@ -26,13 +26,11 @@ public interface XLogoConfig {
 
     /**
      * Alternate text for the logo image, shown if the image cannot be loaded.
-     * Defaults to "logo" if not provided.
      */
     Optional<String> altText();
 
     /**
      * The URL the logo links to when clicked.
-     * If not provided, it defaults to the info.contact.url from the OpenAPI spec.
      */
     Optional<String> href();
 }
