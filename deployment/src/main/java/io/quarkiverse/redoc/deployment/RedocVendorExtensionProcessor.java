@@ -12,7 +12,6 @@ import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
-import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import io.quarkus.deployment.pkg.builditem.CurateOutcomeBuildItem;
 import io.quarkus.maven.dependency.ResolvedDependency;
 import io.quarkus.smallrye.openapi.deployment.spi.AddToOpenAPIDefinitionBuildItem;
@@ -54,7 +53,6 @@ class RedocVendorExtensionProcessor {
     @BuildStep
     @Record(ExecutionTime.RUNTIME_INIT)
     void registerLogoRoute(
-            LaunchModeBuildItem launchMode,
             RedocConfig config,
             NonApplicationRootPathBuildItem nonApplicationRootPath,
             CurateOutcomeBuildItem curateOutcome,
@@ -106,13 +104,21 @@ class RedocVendorExtensionProcessor {
         if (appArtifact != null && appArtifact.getResolvedPaths() != null) {
             for (var basePath : appArtifact.getResolvedPaths()) {
                 Path resourcesPath = basePath.resolve("META-INF/resources");
+
+                // Check if this is a directory (during development/testing)
                 if (Files.exists(resourcesPath) && Files.isDirectory(resourcesPath)) {
                     try (Stream<Path> files = Files.list(resourcesPath)) {
                         var logoFile = files
                                 .filter(Files::isRegularFile)
                                 .filter(p -> {
                                     String name = p.getFileName().toString();
-                                    return name.startsWith("redoc-logo.");
+                                    // Check that it starts with "redoc-logo." and has a valid extension
+                                    if (!name.startsWith("redoc-logo.")) {
+                                        return false;
+                                    }
+                                    int dotIndex = name.lastIndexOf('.');
+                                    // Ensure there's at least one character after the dot (the extension)
+                                    return dotIndex >= "redoc-logo.".length() - 1 && dotIndex < name.length() - 1;
                                 })
                                 .findFirst();
 
@@ -123,7 +129,9 @@ class RedocVendorExtensionProcessor {
                             return new LogoInfo(resourcePath, extension);
                         }
                     } catch (IOException e) {
-                        // Ignore and continue
+                        // Log and continue if directory listing fails
+                        System.err.println("Error listing resources directory: " + resourcesPath);
+                        e.printStackTrace();
                     }
                 }
             }

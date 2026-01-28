@@ -54,7 +54,15 @@ public class RedocRecorder {
                         return;
                     }
 
-                    byte[] bytes = is.readAllBytes();
+                    // Check file size to prevent memory issues
+                    byte[] bytes = is.readNBytes(5 * 1024 * 1024); // Limit to 5MB
+                    if (is.read() != -1) {
+                        // File is larger than 5MB
+                        event.response().setStatusCode(413); // Payload Too Large
+                        event.response().end();
+                        return;
+                    }
+
                     String contentType = determineContentType(resourcePath);
 
                     event.response()
@@ -62,6 +70,9 @@ public class RedocRecorder {
                             .putHeader("Content-Length", String.valueOf(bytes.length))
                             .end(Buffer.buffer(bytes));
                 } catch (Exception e) {
+                    // Log the error for debugging
+                    System.err.println("Error serving logo resource: " + resourcePath);
+                    e.printStackTrace();
                     event.response().setStatusCode(500);
                     event.response().end();
                 }
