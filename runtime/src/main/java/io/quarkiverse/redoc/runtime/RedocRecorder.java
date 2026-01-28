@@ -1,6 +1,7 @@
 package io.quarkiverse.redoc.runtime;
 
 import java.io.InputStream;
+import java.net.URLConnection;
 
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
@@ -70,9 +71,6 @@ public class RedocRecorder {
                             .putHeader("Content-Length", String.valueOf(bytes.length))
                             .end(Buffer.buffer(bytes));
                 } catch (Exception e) {
-                    // Log the error for debugging
-                    System.err.println("Error serving logo resource: " + resourcePath);
-                    e.printStackTrace();
                     event.response().setStatusCode(500);
                     event.response().end();
                 }
@@ -81,18 +79,7 @@ public class RedocRecorder {
     }
 
     private String determineContentType(String resourcePath) {
-        String lowerPath = resourcePath.toLowerCase();
-        if (lowerPath.endsWith(".png")) {
-            return "image/png";
-        } else if (lowerPath.endsWith(".jpg") || lowerPath.endsWith(".jpeg")) {
-            return "image/jpeg";
-        } else if (lowerPath.endsWith(".gif")) {
-            return "image/gif";
-        } else if (lowerPath.endsWith(".svg")) {
-            return "image/svg+xml";
-        } else if (lowerPath.endsWith(".webp")) {
-            return "image/webp";
-        }
-        return "application/octet-stream";
+        String contentType = URLConnection.getFileNameMap().getContentTypeFor(resourcePath);
+        return contentType != null ? contentType : "application/octet-stream";
     }
 }

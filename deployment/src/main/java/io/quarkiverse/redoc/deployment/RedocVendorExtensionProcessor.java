@@ -103,7 +103,9 @@ class RedocVendorExtensionProcessor {
         ResolvedDependency appArtifact = curateOutcome.getApplicationModel().getAppArtifact();
         if (appArtifact != null && appArtifact.getResolvedPaths() != null) {
             for (var basePath : appArtifact.getResolvedPaths()) {
-                Path resourcesPath = basePath.resolve("META-INF/resources");
+                // Look directly in the resources directory, not META-INF/resources
+                // since we're serving the logo ourselves with a custom route
+                Path resourcesPath = basePath;
 
                 // Check if this is a directory (during development/testing)
                 if (Files.exists(resourcesPath) && Files.isDirectory(resourcesPath)) {
@@ -125,13 +127,11 @@ class RedocVendorExtensionProcessor {
                         if (logoFile.isPresent()) {
                             String fileName = logoFile.get().getFileName().toString();
                             String extension = fileName.substring(fileName.lastIndexOf('.'));
-                            String resourcePath = "META-INF/resources/" + fileName;
+                            String resourcePath = fileName;
                             return new LogoInfo(resourcePath, extension);
                         }
                     } catch (IOException e) {
-                        // Log and continue if directory listing fails
-                        System.err.println("Error listing resources directory: " + resourcesPath);
-                        e.printStackTrace();
+                        // Continue if directory listing fails
                     }
                 }
             }
