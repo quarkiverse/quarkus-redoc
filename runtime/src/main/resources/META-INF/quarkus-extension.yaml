@@ -4,7 +4,7 @@ description: OpenAPI/Swagger-generated API Reference Documentation using Redoc C
 metadata:
   keywords:
     - redoc
-  guide: https://docs.quarkiverse.io/redoc/dev/
+  guide: https://docs.quarkiverse.io/quarkus-redoc/dev/
   icon-url: https://avatars.githubusercontent.com/u/32099856?s=48&v=4
   categories:
     - "redoc"
