@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import io.quarkiverse.redoc.deployment.config.RedocConfig;
+import io.quarkiverse.redoc.deployment.config.XLogoConfig;
 import io.quarkiverse.redoc.deployment.model.DownloadUrlModel;
 import io.quarkiverse.redoc.deployment.model.RedocConfigModel;
 import io.quarkiverse.redoc.runtime.RedocRecorder;
@@ -16,7 +17,10 @@ import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.LaunchModeBuildItem;
+import io.quarkus.deployment.pkg.builditem.CurateOutcomeBuildItem;
+import io.quarkus.maven.dependency.ResolvedDependency;
 import io.quarkus.smallrye.openapi.common.deployment.SmallRyeOpenApiConfig;
+import io.quarkus.smallrye.openapi.deployment.spi.AddToOpenAPIDefinitionBuildItem;
 import io.quarkus.vertx.http.deployment.NonApplicationRootPathBuildItem;
 import io.quarkus.vertx.http.deployment.RouteBuildItem;
 
@@ -77,6 +81,64 @@ class RedocProcessor {
                 config.ignoreNamedSchemas().orElse(Collections.emptySet()),
                 config.hideLoading().orElse(null),
                 config.hideSidebar().orElse(null)));
+    }
+
+    @BuildStep
+    void addXLogoToOpenAPI(
+            RedocConfig config,
+            NonApplicationRootPathBuildItem nonApplicationRootPath,
+            CurateOutcomeBuildItem curateOutcome,
+            BuildProducer<AddToOpenAPIDefinitionBuildItem> openApiProducer) {
+
+        XLogoConfig xLogoConfig = config.xLogo();
+
+        // Determine the logo URL
+        String logoUrl = determineLogoUrl(xLogoConfig, nonApplicationRootPath, curateOutcome);
+
+        // If no logo URL is determined, skip adding the extension
+        if (logoUrl == null || logoUrl.isEmpty()) {
+            return;
+        }
+
+        // Create and register the OASFilter
+        XLogoOASFilter filter = new XLogoOASFilter(
+                logoUrl,
+                xLogoConfig.backgroundColor().orElse(null),
+                xLogoConfig.altText().orElse(null),
+                xLogoConfig.href().orElse(null));
+
+        openApiProducer.produce(new AddToOpenAPIDefinitionBuildItem(filter));
+    }
+
+    private String determineLogoUrl(XLogoConfig xLogoConfig, NonApplicationRootPathBuildItem nonApplicationRootPath,
+            CurateOutcomeBuildItem curateOutcome) {
+        // If a URL is explicitly configured, use it
+        if (xLogoConfig.url().isPresent()) {
+            return xLogoConfig.url().get();
+        }
+
+        // Check if logo.png exists in the classpath under META-INF/resources/
+        if (logoExistsInClasspath(curateOutcome)) {
+            // Return the path relative to the non-application root
+            return nonApplicationRootPath.resolvePath("logo.png");
+        }
+
+        return null;
+    }
+
+    private boolean logoExistsInClasspath(CurateOutcomeBuildItem curateOutcome) {
+        // Check in the application root
+        ResolvedDependency appArtifact = curateOutcome.getApplicationModel().getAppArtifact();
+        if (appArtifact != null && appArtifact.getResolvedPaths() != null) {
+            for (var path : appArtifact.getResolvedPaths()) {
+                var logoPath = path.resolve("META-INF/resources/logo.png");
+                if (java.nio.file.Files.exists(logoPath)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     @BuildStep
