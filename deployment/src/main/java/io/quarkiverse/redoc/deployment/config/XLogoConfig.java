@@ -14,7 +14,8 @@ public interface XLogoConfig {
      * <ul>
      * <li>An absolute URL (e.g., https://example.com/logo.png)</li>
      * <li>A relative path that will be served by the application</li>
-     * <li>If not set, the extension will look for 'logo.png' in the classpath under META-INF/resources/</li>
+     * <li>If not set, the extension will look for a file starting with 'redoc-logo.' in the classpath under
+     * META-INF/resources/</li>
      * </ul>
      */
     Optional<String> url();

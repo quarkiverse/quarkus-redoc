@@ -1,7 +1,7 @@
 package io.quarkiverse.redoc.it;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.notNullValue;
 
 import org.junit.jupiter.api.Test;
 
@@ -19,14 +19,15 @@ public class XLogoTest {
                 .then()
                 .statusCode(200)
                 .contentType(ContentType.JSON)
-                .body(containsString("\"x-logo\""));
+                .body("info.'x-logo'", notNullValue())
+                .body("info.'x-logo'.url", notNullValue());
     }
 
     @Test
     public void testLogoResourceIsAccessible() {
-        // Verify that the logo.png file is accessible
+        // Verify that the redoc-logo.png file is accessible via the custom route
         given()
-                .when().get("/logo.png")
+                .when().get("/q/redoc/redoc-logo.png")
                 .then()
                 .statusCode(200)
                 .contentType("image/png");

@@ -1,8 +1,11 @@
 package io.quarkiverse.redoc.runtime;
 
+import java.io.InputStream;
+
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
 import io.vertx.core.Handler;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.ext.web.RoutingContext;
 
 @Recorder
@@ -31,5 +34,54 @@ public class RedocRecorder {
                 event.response().end();
             }
         };
+    }
+
+    public Handler<RoutingContext> createLogoHandler(String resourcePath) {
+        return new Handler<RoutingContext>() {
+            @Override
+            public void handle(RoutingContext event) {
+                if (!config.getValue().enabled()) {
+                    event.response().setStatusCode(404);
+                    event.response().end();
+                    return;
+                }
+
+                try (InputStream is = Thread.currentThread().getContextClassLoader()
+                        .getResourceAsStream(resourcePath)) {
+                    if (is == null) {
+                        event.response().setStatusCode(404);
+                        event.response().end();
+                        return;
+                    }
+
+                    byte[] bytes = is.readAllBytes();
+                    String contentType = determineContentType(resourcePath);
+
+                    event.response()
+                            .putHeader("Content-Type", contentType)
+                            .putHeader("Content-Length", String.valueOf(bytes.length))
+                            .end(Buffer.buffer(bytes));
+                } catch (Exception e) {
+                    event.response().setStatusCode(500);
+                    event.response().end();
+                }
+            }
+        };
+    }
+
+    private String determineContentType(String resourcePath) {
+        String lowerPath = resourcePath.toLowerCase();
+        if (lowerPath.endsWith(".png")) {
+            return "image/png";
+        } else if (lowerPath.endsWith(".jpg") || lowerPath.endsWith(".jpeg")) {
+            return "image/jpeg";
+        } else if (lowerPath.endsWith(".gif")) {
+            return "image/gif";
+        } else if (lowerPath.endsWith(".svg")) {
+            return "image/svg+xml";
+        } else if (lowerPath.endsWith(".webp")) {
+            return "image/webp";
+        }
+        return "application/octet-stream";
     }
 }

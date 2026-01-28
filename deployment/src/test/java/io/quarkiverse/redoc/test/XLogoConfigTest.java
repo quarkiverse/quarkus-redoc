@@ -21,10 +21,10 @@ public class XLogoConfigTest {
     static final QuarkusUnitTest unitTest = new QuarkusUnitTest()
             .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class)
                     .addAsResource(new StringAsset("""
-                            quarkus.redoc.x-logo.url=https://example.com/logo.png
-                            quarkus.redoc.x-logo.background-color=#FFFFFF
-                            quarkus.redoc.x-logo.alt-text=Example Logo
-                            quarkus.redoc.x-logo.href=https://example.com
+                            quarkus.redoc.extensions.x-logo.url=https://example.com/logo.png
+                            quarkus.redoc.extensions.x-logo.background-color=#FFFFFF
+                            quarkus.redoc.extensions.x-logo.alt-text=Example Logo
+                            quarkus.redoc.extensions.x-logo.href=https://example.com
                             """), "application.properties"));
 
     @Test
