@@ -20,6 +20,10 @@
             <artifactId>quarkus-rest</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-openapi</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.quarkiverse.redoc</groupId>
             <artifactId>quarkus-redoc</artifactId>
             <version>${project.version}</version>
