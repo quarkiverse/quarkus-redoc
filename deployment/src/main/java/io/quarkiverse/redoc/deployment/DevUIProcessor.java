@@ -38,7 +38,6 @@ public class DevUIProcessor {
         card.addPage(Page.externalPageBuilder("Redoc CE")
                 .url(uiPath, uiPath)
                 .isHtmlContent()
-                .doNotEmbed(true)
                 .icon("font-awesome-solid:signs-post"));
 
         cardPageBuildItemBuildProducer.produce(card);
