@@ -20,8 +20,12 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
 @Path("/redoc")
 @ApplicationScoped
+@Tag(name = "users", description = "User operations")
+@Tag(name = "misc", description = "Miscellaneous operations")
 public class RedocResource {
     // add some rest methods here
 

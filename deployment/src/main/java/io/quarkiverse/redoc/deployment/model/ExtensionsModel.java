@@ -1,4 +1,9 @@
 package io.quarkiverse.redoc.deployment.model;
 
-public record ExtensionsModel(XLogoModel xLogoModel) {
+import java.util.List;
+
+public record ExtensionsModel(
+        XLogoModel xLogoModel,
+        List<XTagGroupModel> xTagGroupModels,
+        String xTagGroupsUngroupedName) {
 }

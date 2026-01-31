@@ -590,6 +590,73 @@ endif::add-copy-button-to-env-var[]
 |string
 |`+++Defaults to 'info.contact.url' field from the OpenAPI definition.+++`
 
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-extensions-x-tag-groups-name]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-extensions-x-tag-groups-name[`quarkus.redoc.extensions.x-tag-groups.name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.extensions.x-tag-groups.name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The name of the tag group displayed in the sidebar.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_EXTENSIONS_X_TAG_GROUPS_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_EXTENSIONS_X_TAG_GROUPS_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-extensions-x-tag-groups-tags]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-extensions-x-tag-groups-tags[`quarkus.redoc.extensions.x-tag-groups.tags`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.extensions.x-tag-groups.tags+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The list of tag names to include in this group.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_EXTENSIONS_X_TAG_GROUPS_TAGS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_EXTENSIONS_X_TAG_GROUPS_TAGS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a|icon:lock[title=Fixed at build time] [[quarkus-redoc_quarkus-redoc-extensions-x-tag-groups-ungrouped-name]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-extensions-x-tag-groups-ungrouped-name[`quarkus.redoc.extensions.x-tag-groups-ungrouped-name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.redoc.extensions.x-tag-groups-ungrouped-name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Name for the group that contains any tags not explicitly assigned to a tag group.
+
+When x-tagGroups is configured, tags not assigned to any group are hidden by Redoc. This option creates an additional group containing all ungrouped tags.
+
+Set to an empty string to disable this group.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_REDOC_EXTENSIONS_X_TAG_GROUPS_UNGROUPED_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_REDOC_EXTENSIONS_X_TAG_GROUPS_UNGROUPED_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++Other+++`
+
 a| [[quarkus-redoc_quarkus-redoc-enabled]] [.property-path]##link:#quarkus-redoc_quarkus-redoc-enabled[`quarkus.redoc.enabled`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.redoc.enabled+++[]
