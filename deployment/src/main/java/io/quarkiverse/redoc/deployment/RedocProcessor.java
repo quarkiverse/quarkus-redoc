@@ -11,6 +11,7 @@ import io.quarkiverse.redoc.deployment.model.DownloadUrlModel;
 import io.quarkiverse.redoc.deployment.model.ExtensionsModel;
 import io.quarkiverse.redoc.deployment.model.RedocConfigModel;
 import io.quarkiverse.redoc.deployment.model.XLogoModel;
+import io.quarkiverse.redoc.deployment.model.XTagGroupModel;
 import io.quarkiverse.redoc.runtime.RedocRecorder;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
@@ -79,10 +80,16 @@ class RedocProcessor {
                 config.ignoreNamedSchemas().orElse(Collections.emptySet()),
                 config.hideLoading().orElse(null),
                 config.hideSidebar().orElse(null),
-                new ExtensionsModel(config.extensions().xLogo()
-                        .map(xLogoConfig -> new XLogoModel(xLogoConfig.url(), xLogoConfig.backgroundColor().orElse(null),
-                                xLogoConfig.altText().orElse(null), xLogoConfig.href().orElse(null)))
-                        .orElse(null))));
+                new ExtensionsModel(
+                        config.extensions().xLogo()
+                                .map(xLogoConfig -> new XLogoModel(xLogoConfig.url(),
+                                        xLogoConfig.backgroundColor().orElse(null),
+                                        xLogoConfig.altText().orElse(null), xLogoConfig.href().orElse(null)))
+                                .orElse(null),
+                        config.extensions().xTagGroups().stream()
+                                .map(tagGroupConfig -> new XTagGroupModel(tagGroupConfig.name(), tagGroupConfig.tags()))
+                                .toList(),
+                        config.extensions().xTagGroupsUngroupedName().orElse(null))));
     }
 
     @BuildStep
