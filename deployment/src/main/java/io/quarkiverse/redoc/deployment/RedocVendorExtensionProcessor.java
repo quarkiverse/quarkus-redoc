@@ -14,12 +14,12 @@ class RedocVendorExtensionProcessor {
             BuildProducer<AddToOpenAPIDefinitionBuildItem> openApiProducer,
             RedocConfigBuildItem redocConfigBuildItem) {
 
-        if (redocConfigBuildItem.getConfig().extensionsModel().xLogoModel() == null) {
+        if (redocConfigBuildItem.getConfig().extensions.xLogo == null) {
             return;
         }
 
         // Create and register the OASFilter
-        XLogoOASFilter filter = new XLogoOASFilter(redocConfigBuildItem.getConfig().extensionsModel().xLogoModel());
+        XLogoOASFilter filter = new XLogoOASFilter(redocConfigBuildItem.getConfig().extensions.xLogo);
 
         openApiProducer.produce(new AddToOpenAPIDefinitionBuildItem(filter));
     }
@@ -29,16 +29,16 @@ class RedocVendorExtensionProcessor {
             BuildProducer<AddToOpenAPIDefinitionBuildItem> openApiProducer,
             RedocConfigBuildItem redocConfigBuildItem) {
 
-        if (redocConfigBuildItem.getConfig().extensionsModel().xTagGroupModels() == null
-                || redocConfigBuildItem.getConfig().extensionsModel().xTagGroupModels().isEmpty()) {
+        if (redocConfigBuildItem.getConfig().extensions.xTagGroups == null
+                || redocConfigBuildItem.getConfig().extensions.xTagGroups.isEmpty()) {
             return;
         }
 
         // Create and register the OASFilter
         XTagGroupsOASFilter filter = new XTagGroupsOASFilter(
-                redocConfigBuildItem.getConfig().extensionsModel().xTagGroupModels(),
-                redocConfigBuildItem.getConfig().extensionsModel().xTagGroupsUngroupedName(),
-                redocConfigBuildItem.getConfig().schemaDefinitionsTagName());
+                redocConfigBuildItem.getConfig().extensions.xTagGroups,
+                redocConfigBuildItem.getConfig().extensions.xTagGroupsUngroupedName,
+                redocConfigBuildItem.getConfig().schemaDefinitionsTagName);
 
         openApiProducer.produce(new AddToOpenAPIDefinitionBuildItem(filter));
     }

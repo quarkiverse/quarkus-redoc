@@ -5,5 +5,7 @@ import java.util.List;
 /**
  * DTO representing a single tag group in the x-tagGroups OpenAPI vendor extension.
  */
-public record XTagGroupModel(String name, List<String> tags) {
+public class XTagGroupModel {
+    public String name;
+    public List<String> tags;
 }

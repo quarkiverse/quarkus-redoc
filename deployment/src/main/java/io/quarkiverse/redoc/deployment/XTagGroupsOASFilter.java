@@ -41,7 +41,7 @@ public class XTagGroupsOASFilter implements OASFilter {
         Set<String> alreadyAssignedTags = new HashSet<>();
         for (XTagGroupModel xTagGroup : xTagGroups) {
             tagGroupsList.add(toMap(xTagGroup));
-            alreadyAssignedTags.addAll(xTagGroup.tags());
+            alreadyAssignedTags.addAll(xTagGroup.tags);
         }
 
         // Add group for ungrouped tags if configured
@@ -63,7 +63,7 @@ public class XTagGroupsOASFilter implements OASFilter {
     }
 
     private Map<String, Object> toMap(XTagGroupModel tagGroup) {
-        return toMap(tagGroup.name(), tagGroup.tags());
+        return toMap(tagGroup.name, tagGroup.tags);
     }
 
     private Map<String, Object> toMap(String name, Collection<String> tags) {

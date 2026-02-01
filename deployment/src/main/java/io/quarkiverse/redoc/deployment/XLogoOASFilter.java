@@ -36,18 +36,18 @@ public class XLogoOASFilter implements OASFilter {
 
         // Build the x-logo extension object
         Map<String, Object> xLogoMap = new HashMap<>();
-        xLogoMap.put("url", xLogo.url());
+        xLogoMap.put("url", xLogo.url);
 
-        if (xLogo.backgroundColor() != null && !xLogo.backgroundColor().isEmpty()) {
-            xLogoMap.put("backgroundColor", xLogo.backgroundColor());
+        if (xLogo.backgroundColor != null && !xLogo.backgroundColor.isEmpty()) {
+            xLogoMap.put("backgroundColor", xLogo.backgroundColor);
         }
 
-        if (xLogo.altText() != null && !xLogo.altText().isEmpty()) {
-            xLogoMap.put("altText", xLogo.altText());
+        if (xLogo.altText != null && !xLogo.altText.isEmpty()) {
+            xLogoMap.put("altText", xLogo.altText);
         }
 
-        if (xLogo.href() != null && !xLogo.href().isEmpty()) {
-            xLogoMap.put("href", xLogo.href());
+        if (xLogo.href != null && !xLogo.href.isEmpty()) {
+            xLogoMap.put("href", xLogo.href);
         }
 
         // Add the x-logo extension to the Info object
