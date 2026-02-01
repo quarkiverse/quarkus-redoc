@@ -3,15 +3,13 @@ package io.quarkiverse.redoc.deployment;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
 import java.util.List;
+
+import org.mapstruct.factory.Mappers;
 
 import io.quarkiverse.redoc.deployment.config.RedocConfig;
 import io.quarkiverse.redoc.deployment.model.DownloadUrlModel;
-import io.quarkiverse.redoc.deployment.model.ExtensionsModel;
 import io.quarkiverse.redoc.deployment.model.RedocConfigModel;
-import io.quarkiverse.redoc.deployment.model.XLogoModel;
-import io.quarkiverse.redoc.deployment.model.XTagGroupModel;
 import io.quarkiverse.redoc.runtime.RedocRecorder;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
@@ -29,6 +27,8 @@ class RedocProcessor {
     private static final String TEMPLATE_PATH = "templates/redoc.html";
     private final RedocConfigSerializer configSerializer = new RedocConfigSerializer();
 
+    private static final ConfigMapper MAPPER = Mappers.getMapper(ConfigMapper.class);
+
     @BuildStep
     FeatureBuildItem feature() {
         return new FeatureBuildItem(FEATURE);
@@ -45,11 +45,11 @@ class RedocProcessor {
         List<DownloadUrlModel> downloadUrls;
         if (config.downloadUrls().isEmpty()) {
             downloadUrls = List.of(
-                    new DownloadUrlModel("JSON", openApiBasePath + ".json"),
-                    new DownloadUrlModel("YAML", openApiBasePath + ".yaml"));
+                    createDownloadUrl("JSON", openApiBasePath + ".json"),
+                    createDownloadUrl("YAML", openApiBasePath + ".yaml"));
         } else {
             downloadUrls = config.downloadUrls().stream()
-                    .map(du -> new DownloadUrlModel(du.title(), du.url()))
+                    .map(du -> createDownloadUrl(du.title(), du.url()))
                     .toList();
         }
 
@@ -57,39 +57,11 @@ class RedocProcessor {
                 .filter(s -> !s.isEmpty())
                 .orElseGet(() -> nonApplicationRootPath.resolvePath(config.path()));
 
-        return new RedocConfigBuildItem(new RedocConfigModel(
-                config.path(),
-                routingBasePath,
-                config.title(),
-                config.alwaysInclude(),
-                config.hideDownloadButtons().orElse(null),
-                config.hideSchemaTitles().orElse(null),
-                config.jsonSamplesExpandLevel().orElse(null),
-                config.maxDisplayedEnumValues().orElse(null),
-                config.layout().orElse(null),
-                config.onlyRequiredInSamples().orElse(null),
-                config.sortRequiredPropsFirst().orElse(null),
-                config.schemasExpansionLevel().orElse(null),
-                config.scrollYOffset().orElse(null),
-                config.showExtensions().orElse(null),
-                config.sanitize().orElse(null),
-                downloadUrls,
-                config.schemaDefinitionsTagName(),
-                config.generatedSamplesMaxDepth().orElse(null),
-                config.hidePropertiesPrefix().orElse(null),
-                config.ignoreNamedSchemas().orElse(Collections.emptySet()),
-                config.hideLoading().orElse(null),
-                config.hideSidebar().orElse(null),
-                new ExtensionsModel(
-                        config.extensions().xLogo()
-                                .map(xLogoConfig -> new XLogoModel(xLogoConfig.url(),
-                                        xLogoConfig.backgroundColor().orElse(null),
-                                        xLogoConfig.altText().orElse(null), xLogoConfig.href().orElse(null)))
-                                .orElse(null),
-                        config.extensions().xTagGroups().stream()
-                                .map(tagGroupConfig -> new XTagGroupModel(tagGroupConfig.name(), tagGroupConfig.tags()))
-                                .toList(),
-                        config.extensions().xTagGroupsUngroupedName().orElse(null))));
+        RedocConfigModel model = MAPPER.map(config);
+        model.routingBasePath = routingBasePath;
+        model.downloadUrls = downloadUrls;
+
+        return new RedocConfigBuildItem(model);
     }
 
     @BuildStep
@@ -113,14 +85,14 @@ class RedocProcessor {
 
         routeProducer.produce(
                 nonApplicationRootPath.routeBuilder()
-                        .route(config.path())
+                        .route(config.path)
                         .displayOnNotFoundPage("Redoc CE")
                         .handler(recorder.createHandler(generatedHtml))
                         .build());
     }
 
     private boolean shouldInclude(LaunchModeBuildItem launchMode, RedocConfigModel config) {
-        return launchMode.getLaunchMode().isDevOrTest() || config.alwaysInclude();
+        return launchMode.getLaunchMode().isDevOrTest() || config.alwaysInclude;
     }
 
     private String generateRedocHtml(RedocConfigModel config, String openApiUrl) {
@@ -128,7 +100,7 @@ class RedocProcessor {
         String redocOptionsJson = configSerializer.serialize(config);
 
         return template
-                .replace("{title}", escapeHtml(config.title()))
+                .replace("{title}", escapeHtml(config.title))
                 .replace("{specUrl}", escapeJs(openApiUrl))
                 .replace("{redocOptions}", redocOptionsJson)
                 .replace("{redocJsPath}", "https://cdn.redoc.ly/redoc/v3.0.0-rc.0/redoc.standalone.js");
@@ -168,5 +140,12 @@ class RedocProcessor {
                 .replace("\n", "\\n")
                 .replace("\r", "\\r")
                 .replace("\t", "\\t");
+    }
+
+    private DownloadUrlModel createDownloadUrl(String title, String url) {
+        DownloadUrlModel model = new DownloadUrlModel();
+        model.title = title;
+        model.url = url;
+        return model;
     }
 }

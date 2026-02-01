@@ -33,6 +33,23 @@
             <artifactId>quarkus-smallrye-openapi-spi</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+
+        <!-- to enforce build order -->
+        <dependency>
+            <groupId>io.quarkiverse.redoc</groupId>
+            <artifactId>quarkus-redoc-mapstruct-tooling</artifactId>
+            <version>${project.version}</version>
+            <!-- runtime so that classes are not importable -->
+            <scope>runtime</scope>
+        </dependency>
+
+        <!--
+            Test Dependencies
+        -->
+        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5-internal</artifactId>
             <scope>test</scope>
@@ -61,9 +78,18 @@
                                 <path>
                                     <groupId>io.quarkus</groupId>
                                     <artifactId>quarkus-extension-processor</artifactId>
-                                    <version>${quarkus.version}</version>
+                                </path>
+                                <path>
+                                    <groupId>org.mapstruct</groupId>
+                                    <artifactId>mapstruct-processor</artifactId>
+                                </path>
+                                <path>
+                                    <groupId>io.quarkiverse.redoc</groupId>
+                                    <artifactId>quarkus-redoc-mapstruct-tooling</artifactId>
+                                    <version>${project.version}</version>
                                 </path>
                             </annotationProcessorPaths>
+                            <annotationProcessorPathsUseDepMgmt>true</annotationProcessorPathsUseDepMgmt>
                         </configuration>
                     </execution>
                 </executions>

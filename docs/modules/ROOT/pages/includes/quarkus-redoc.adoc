@@ -642,9 +642,7 @@ endif::add-copy-button-to-config-props[]
 --
 Name for the group that contains any tags not explicitly assigned to a tag group.
 
-When x-tagGroups is configured, tags not assigned to any group are hidden by Redoc. This option creates an additional group containing all ungrouped tags.
-
-Set to an empty string to disable this group.
+When x-tag-groups is configured, tags not assigned to any group are hidden by Redoc. This option creates an additional group containing all ungrouped tags.  Set to an empty string - or null depending on your config source - to disable this group.
 
 
 ifdef::add-copy-button-to-env-var[]
