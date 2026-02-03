@@ -25,11 +25,15 @@ For instance, with Maven, add the following dependency to your POM file:
 
 Once installed, Redoc CE will be available at `/q/redoc` in dev and test modes. Simply navigate to that URL to view your API documentation - or press on the corresponding link in dev-ui.
 
-You can activate Redoc CE for production mode by configuring:
+== Swagger UI is Disabled by Default
+
+When you use this extension with `quarkus-smallrye-openapi`, Swagger UI is automatically disabled to avoid having two API documentation UIs. This extension sets `quarkus.swagger-ui.enabled=false` by default.
+
+If you want to use both Redoc and Swagger UI, you can explicitly re-enable Swagger UI:
 
 [source,properties]
 ----
-quarkus.redoc.always-include=true
+quarkus.swagger-ui.enabled=true
 ----
 
 == Changing the Download URLs
